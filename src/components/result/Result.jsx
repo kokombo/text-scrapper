@@ -30,7 +30,7 @@ const Result = ({ result, setResult }) => {
             <CopyToClipboard text={result}>
               <button
                 onClick={() => setAction("copied")}
-                className="italic text-[14px] text-blue-700"
+                className="italic text-base text-blue-700"
               >
                 copy
               </button>
@@ -38,7 +38,7 @@ const Result = ({ result, setResult }) => {
 
             <button
               onClick={clearResult}
-              className="italic text-[14px] text-red-700"
+              className="italic text-base text-red-700"
             >
               clear
             </button>
