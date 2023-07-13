@@ -4,7 +4,7 @@ const Footer = () => {
       <p>Help</p>
 
       <a
-        href="https://theternhub.netlify.app"
+        href="https://https://github.com/BowaDAO/text-scrapper"
         aria-label="view site code on gitbub"
         target="_blank"
         rel="noreferrer"
