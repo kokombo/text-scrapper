@@ -47,7 +47,6 @@ const UploadImage = ({
     if (!selectedImage) {
       setAlert("Please select an image");
     } else {
-      //   setSelectedImage("");
       setProcessing(true);
       const reader = new FileReader();
       reader.onload = (e) => {
