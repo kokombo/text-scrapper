@@ -17,7 +17,7 @@ const Result = ({ result, setResult }) => {
   }, [action]);
 
   return (
-    <div className="m-[10px]">
+    <div className="mx-[20px]">
       {result && (
         <div className="flex flex-col items-start ">
           <h2 className="font-bold">Result:</h2>
