@@ -19,12 +19,10 @@ const Result = ({ result, setResult }) => {
   return (
     <div>
       {result && (
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-start p-10">
           <h2 className="font-bold">Result:</h2>
           <textarea
-            rows={10}
-            cols={45}
-            className="border-[1px] border-gray-700 p-2"
+            className="border-[1px] border-gray-700 p-2 w-[400px] max-w-full h-[300px] "
             defaultValue={result}
           />
 
