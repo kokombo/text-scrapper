@@ -44,11 +44,13 @@ const Result = ({ result, setResult }) => {
             </button>
           </div>
 
-          {action && (
-            <p className="mt-4 self-center italic bg-gray-700 text-white py-[0.5px] px-4">
-              {action}!
-            </p>
-          )}
+          <div>
+            {action && (
+              <p className="mt-4 self-center italic bg-gray-700 text-white py-[0.5px] px-4 absolute">
+                {action}!
+              </p>
+            )}
+          </div>
         </div>
       )}
     </div>
