@@ -12,6 +12,7 @@ function App() {
     const timer = setTimeout(() => {
       setAlert("");
     }, 2000);
+
     return () => clearTimeout(timer);
   }, [alert]);
 

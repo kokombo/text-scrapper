@@ -11,6 +11,7 @@ const UploadImage = ({
   setProcessing,
 }) => {
   ////////////////////////////////////////////////////////////////////////////
+
   const handleChange = (e) => {
     const currentImage = e.target.files[0];
     if (currentImage !== null) {
@@ -19,22 +20,28 @@ const UploadImage = ({
       setAlert("image is invalid");
     }
   };
+
   ///////////////////////////////////////////////////////////////////////////////
+
   const handleDragEnter = (e) => {
     e.preventDefault();
     e.stopPropagation();
   };
+
   const handleDragLeave = (e) => {
     e.preventDefault();
     e.stopPropagation();
   };
+
   const handleDragOver = (e) => {
     e.preventDefault();
     e.stopPropagation();
   };
+
   const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
+
     const currentImage = e.dataTransfer.files[0];
     if (currentImage !== null) {
       setSelectedImage(currentImage);
@@ -42,22 +49,27 @@ const UploadImage = ({
       setAlert("image is invalid");
     }
   };
+
   ///////////////////////////////////////////////////////////////////////////////
+
   const handleSubmit = () => {
     if (!selectedImage) {
       setAlert("Please select an image");
     } else {
       setProcessing(true);
+
       const reader = new FileReader();
+
       reader.onload = (e) => {
         const dataUrl = e.target.result;
         recognizeText(dataUrl);
       };
+
       reader.readAsDataURL(selectedImage);
     }
 
     const recognizeText = async (dataUrl) => {
-      Tesseract.recognize(dataUrl).then(({ data: { text } }) => {
+      await Tesseract.recognize(dataUrl).then(({ data: { text } }) => {
         setResult(text);
         setProcessing(false);
         setSelectedImage("");
@@ -79,6 +91,7 @@ const UploadImage = ({
           accept="image/*"
           className="hidden"
         />
+
         <div
           onDragEnter={(e) => handleDragEnter(e)}
           onDragLeave={(e) => handleDragLeave(e)}
@@ -92,16 +105,22 @@ const UploadImage = ({
             className="h-full w-full"
           />
         </div>
+
         {selectedImage && (
           <p className="mt-2 text-[12px] italic text-green-700">
             Image name: {selectedImage.name}
           </p>
         )}
+
         {alert && (
-          <p className="text-[12px] mt-2 italic text-red-700">{alert}</p>
+          <p className="text-[12px] mt-2 italic text-red-700 absolute">
+            {alert}
+          </p>
         )}
+
         <output></output>
       </label>
+
       <button
         type="button"
         onClick={handleSubmit}

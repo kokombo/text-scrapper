@@ -13,6 +13,7 @@ const Result = ({ result, setResult }) => {
     let timer = setTimeout(() => {
       setAction("");
     }, 2000);
+
     return () => clearTimeout(timer);
   }, [action]);
 
@@ -21,6 +22,7 @@ const Result = ({ result, setResult }) => {
       {result && (
         <div className="flex flex-col items-start ">
           <h2 className="font-bold">Result:</h2>
+
           <textarea
             className="border-[1px] border-gray-700 p-2 w-[380px] max-w-full h-[300px] "
             defaultValue={result}
