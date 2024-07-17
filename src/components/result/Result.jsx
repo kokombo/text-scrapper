@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
+import { useTimeout } from "../../lib";
 
 const Result = ({ result, setResult }) => {
   const [action, setAction] = useState("");
@@ -9,13 +10,7 @@ const Result = ({ result, setResult }) => {
     setAction("cleared");
   };
 
-  useEffect(() => {
-    let timer = setTimeout(() => {
-      setAction("");
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [action]);
+  useTimeout(setAction);
 
   return (
     <div className="mx-[20px]">
@@ -31,6 +26,7 @@ const Result = ({ result, setResult }) => {
           <div className="w-full flex justify-between items-center">
             <CopyToClipboard text={result}>
               <button
+                type="button"
                 onClick={() => setAction("copied")}
                 className="italic text-base text-black font-bold"
               >
@@ -39,6 +35,7 @@ const Result = ({ result, setResult }) => {
             </CopyToClipboard>
 
             <button
+              type="button"
               onClick={clearResult}
               className="italic text-base text-red-700 font-bold"
             >

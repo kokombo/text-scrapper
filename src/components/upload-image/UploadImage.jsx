@@ -1,16 +1,13 @@
 import Tesseract from "tesseract.js";
 import uploadVector from "../../assets/uploadimage.png";
+import { useState } from "react";
+import { useTimeout } from "../../lib";
 
-const UploadImage = ({
-  selectedImage,
-  setSelectedImage,
-  alert,
-  setAlert,
-  setResult,
-  processing,
-  setProcessing,
-}) => {
-  ////////////////////////////////////////////////////////////////////////////
+const UploadImage = ({ setResult }) => {
+  const [selectedImage, setSelectedImage] = useState("");
+  const [processing, setProcessing] = useState(false);
+  const [error, setError] = useState("");
+  const [alert, setAlert] = useState("");
 
   const handleChange = (e) => {
     const currentImage = e.target.files[0];
@@ -20,8 +17,6 @@ const UploadImage = ({
       setAlert("image is invalid");
     }
   };
-
-  ///////////////////////////////////////////////////////////////////////////////
 
   const handleDragEnter = (e) => {
     e.preventDefault();
@@ -50,32 +45,44 @@ const UploadImage = ({
     }
   };
 
-  ///////////////////////////////////////////////////////////////////////////////
-
   const handleSubmit = () => {
     if (!selectedImage) {
       setAlert("Please select an image");
-    } else {
-      setProcessing(true);
-
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        const dataUrl = e.target.result;
-        recognizeText(dataUrl);
-      };
-
-      reader.readAsDataURL(selectedImage);
+      return;
     }
 
+    setResult("");
+    const reader = new FileReader();
+
     const recognizeText = async (dataUrl) => {
-      await Tesseract.recognize(dataUrl).then(({ data: { text } }) => {
-        setResult(text);
-        setProcessing(false);
-        setSelectedImage("");
-      });
+      setProcessing(true);
+      await Tesseract.recognize(dataUrl)
+        .then(({ data: { text } }) => {
+          setResult(text);
+          setSelectedImage("");
+        })
+        .catch((error) => {
+          setError(error);
+        })
+        .finally(() => {
+          setProcessing(false);
+        });
     };
+
+    reader.onload = async (e) => {
+      const dataUrl = e.target.result;
+      await recognizeText(dataUrl);
+    };
+
+    reader.onerror = (error) => {
+      setError(error);
+      setProcessing(false);
+    };
+
+    reader.readAsDataURL(selectedImage);
   };
+
+  useTimeout(setAlert);
 
   return (
     <div className="p-10 flex flex-col items-center text-center gap-10">
@@ -117,8 +124,6 @@ const UploadImage = ({
             {alert}
           </p>
         )}
-
-        <output></output>
       </label>
 
       <button
